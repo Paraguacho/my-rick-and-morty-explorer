@@ -34,7 +34,14 @@ export const getColumns = (onView) =>[
         dataIndex: 'created',
         key: 'created',
         //Conversion de la fecha a formato DD-MM-YYYY
-        render: (date) => new Date(date).toDateString('es-ES')
+        render: (date)=>{
+            const datee = new Date(date)
+            return datee.toLocaleDateString('es-ES',{
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
     },
     {
         title: 'Detalles',
