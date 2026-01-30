@@ -3,9 +3,9 @@ import { Tag } from 'antd';
 export const getColumns = (onView) =>[
     {
         title: 'Foto',
-        dataIndex: 'Image',
-        key: 'Image',
-        render : (text) => <img src ={text} alt='avatar' style={{width: 50, borderRadius: '50%'}}/>
+        dataIndex: 'image',
+        key: 'image',
+        render : (image) => <img src ={image} alt='avat2ar' style={{width: 50, borderRadius: '50%'}}/>
     },
     {
         title: 'Nombre',
@@ -37,7 +37,7 @@ export const getColumns = (onView) =>[
         render: (date) => new Date(date).toDateString('es-ES')
     },
     {
-        title: 'Mostrar',
+        title: 'Detalles',
         key: 'show',
         render : (_,record) => (
             <button onClick={()=> onViewDetail(record.id)}>Ver detalle</button>

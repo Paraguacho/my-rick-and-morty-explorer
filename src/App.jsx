@@ -48,8 +48,20 @@ function App() {
     };
 
     return(
-        <div>
-            <Title> Rick and Morty Explorer</Title>
+        <div style={
+                {
+                    padding:'40px',
+                    maxWidth : '1200px',
+                    margin: '0 auto'
+                }
+            }>
+            <Title level={2} style={
+            {
+                textAlign: 'center',
+                marginBottom: '30px'
+            }
+            }
+            >Rick and Morty Explorer</Title>
             <Table
                 columns={getColumns(handleViewDetail)}
                 dataSource={characters}
