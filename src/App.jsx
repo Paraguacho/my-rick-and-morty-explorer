@@ -1,11 +1,16 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Card, Tag, Input, Typography, Spin, Pagination, Modal} from "antd";
-import CharacterCard from "./CharacterCard";
-import CharacterModal from "./CharacterModal";
+import CharacterCard from "./components/CharacterCard";
+import CharacterModal from "./components/CharacterModal";
 
 
 const {Meta} = Card;
 const {Title} = Typography;
+const statusColors = {
+        Alive: 'green',
+        Dead: 'red',
+        unknown : 'default'
+}
 
 function App() {
     //Estado de los personajes
@@ -18,11 +23,7 @@ function App() {
     const [selectedCharacter, setSelectedCharacter] = useState(null)
     const [modalLoading,setModalLoading] = useState(false)
 
-    const statusColors = {
-        Alive: 'green',
-        Dead: 'red',
-        unknown : 'default'
-    }
+    
 
     //Mostrar detalles
     const handleViewDetail = async (id) =>{
