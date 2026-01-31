@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Table, Typography } from "antd";
-import { getColumns } from "./columns";
+import { Row, Col, Card, Tag, Input, Typography, Pagination} from "antd";
 
+import CharacterCard from "./CharacterCard";
+
+
+const {Meta} = Card;
 const {Title} = Typography;
 
 function App() {
@@ -48,28 +51,47 @@ function App() {
     };
 
     return(
-        <div style={
-                {
-                    padding:'40px',
-                    maxWidth : '1200px',
-                    margin: '0 auto'
-                }
-            }>
-            <Title level={2} style={
-            {
+       <div style={{
+            padding: '40px',
+            maxWidth: '1200px',
+            margin: '0 auto'
+            }}> 
+            <Title level={2} style={{
                 textAlign: 'center',
-                marginBottom: '30px'
-            }
-            }
-            >Rick and Morty Explorer</Title>
-            <Table
-                columns={getColumns(handleViewDetail)}
-                dataSource={characters}
-                loading={loading}
-                rowKey="id"
-                pagination={tablePagination}
+                marginBottom: '30px', 
+                background: 'white',
+                borderRadius: '15px',
+                padding : '4px'
+               
+            }}>
+                Rick And Morty Explorer
+            </Title>  
+            <Row gutter={[16,16]}>
+                    {characters.map((character)=>(
+                        <Col key={character.id} xs={24} sm={12} md={8} lg ={6} xl = {5}>
+                            <CharacterCard
+                                character = {character}
+                                onViewDetail = {handleViewDetail}
+                            />
+                        </Col>
+                    ))}
+            </Row>
+            <div style={{
+                textAlign: 'center',
+                marginTop: '30px' 
+            }}>
+            <Pagination 
+                current={currentPage} 
+                total={total} 
+                pageSize={20} 
+                onChange={(page) => {
+                setCurrentPage(page);
+                fetchCharacters(page);
+                }}
+                showSizeChanger={false}
             />
-        </div>
+            </div>
+        </div> 
     );
 }
 
