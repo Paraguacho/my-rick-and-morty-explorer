@@ -4,7 +4,7 @@ Explorador interactivo de personajes basado en la API de Rick and Morty. Esta pe
 
 ## Descripcion del Proyecto
 
-Este proyecto ha sido desarrollado como una SPA utilizando React** y Vite. El objetivo principal es ofrecer una experiencia de usuario fluida, implementando el consumo de API REST, el manejo de estados  y la optimización de consultas Debounce.
+Este proyecto ha sido desarrollado como una SPA utilizando React y Vite. El objetivo principal es ofrecer una experiencia de usuario fluida, implementando el consumo de API REST, el manejo de estados  y la optimización de consultas Debounce.
 
 La interfaz está construida con la biblioteca de componentes Ant Design.
 
