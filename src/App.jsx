@@ -68,8 +68,7 @@ function App() {
     return(
        <div style={{
             padding: '20px 40px',
-            maxWidth: '100%',
-            margin: '0 auto',
+            width: '95vw',
             minHeight: '100vh',
             backgroundColor: '#141414'
             }}> 
@@ -101,7 +100,6 @@ function App() {
             </div> 
             
             <Row gutter={[16,16]}>
-                {characters.length > 0} 
                     {characters.map((character)=>(
                         <Col key={character.id} style={{flex: '1 0 18%', maxWidth:'20%'}} xs={24} sm={12} md={8} lg ={6} xl = {6}>
                             <CharacterCard
