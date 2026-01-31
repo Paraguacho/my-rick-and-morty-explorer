@@ -24,12 +24,19 @@ const CharacterCard = ({character, onViewDetail}) =>{
         <Card
             hoverable
             style={{
-                width: '100',
-                marginBottom: '16px'
+                width: '100%',
+                marginBottom: '16px',
+                overflow:'hidden'
             }}
             cover={<img 
                         alt={character.name}
-                         src={character.image} 
+                        src={character.image}
+                        style={{
+                            width:'100',
+                          
+                            objectFit : 'cover',
+                            display: 'block'
+                        }} 
             />}
             actions={[
                 <button type='link' onClick={()=> onViewDetail(character.id)}>
@@ -39,9 +46,13 @@ const CharacterCard = ({character, onViewDetail}) =>{
             
         >
             <Meta
-                title={<b>{character.name}</b>}
+                title={
+                    <div style={{textAlign: 'center', fontSize: '20px'}}>
+                        <b>{character.name}</b>
+                    </div>
+                }
                 description={
-                    <>
+                    <div style={{textAlign : 'center'}}>
                         <p style={{margin: 0}}> <i>{character.gender}</i></p>
                         <Tag color={statusColors[character.status]}>
                             {character.status}
@@ -49,11 +60,11 @@ const CharacterCard = ({character, onViewDetail}) =>{
                         <p style={{
                                     marginTop: '8px',
                                     fontSize: '12px',
-                                    color :'gray'
+                                    color :'gray',
                                 }}
                             >{formatedDate}
                         </p> 
-                    </>
+                    </div>
                 }
             />
         </Card>

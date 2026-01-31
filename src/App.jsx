@@ -52,23 +52,28 @@ function App() {
 
     return(
        <div style={{
-            padding: '40px',
-            maxWidth: '1200px',
-            margin: '0 auto'
+            padding: '20px 40px',
+            maxWidth: '100%',
+            margin: '0 auto',
+            minHeight: '100vh',
+            backgroundColor: '#141414'
             }}> 
-            <Title level={2} style={{
+
+            <Title level={1} style={{
                 textAlign: 'center',
-                marginBottom: '30px', 
-                background: 'white',
+                color:'#efefef',
+                backgroundColor:'#343534',
+                marginTop: '20px', 
+                letterSpacing: '4px',
                 borderRadius: '15px',
-                padding : '4px'
+                padding :'4px'
                
             }}>
                 Rick And Morty Explorer
             </Title>  
             <Row gutter={[16,16]}>
                     {characters.map((character)=>(
-                        <Col key={character.id} xs={24} sm={12} md={8} lg ={6} xl = {5}>
+                        <Col key={character.id} style={{flex: '1 0 18%', maxWidth:'20%'}} xs={24} sm={12} md={8} lg ={6} xl = {6}>
                             <CharacterCard
                                 character = {character}
                                 onViewDetail = {handleViewDetail}
@@ -77,19 +82,22 @@ function App() {
                     ))}
             </Row>
             <div style={{
+                display:'flex',
+                justifyContent: 'center',
                 textAlign: 'center',
-                marginTop: '30px' 
-            }}>
-            <Pagination 
-                current={currentPage} 
-                total={total} 
-                pageSize={20} 
-                onChange={(page) => {
-                setCurrentPage(page);
-                fetchCharacters(page);
-                }}
-                showSizeChanger={false}
-            />
+                marginTop: '30px', 
+                width: '100%'
+                }}>
+                <Pagination 
+                    current={currentPage} 
+                    total={total} 
+                    pageSize={20} 
+                    onChange={(page) => {
+                        setCurrentPage(page);
+                        fetchCharacters(page);
+                    }}
+                    showSizeChanger={false}
+                />
             </div>
         </div> 
     );
