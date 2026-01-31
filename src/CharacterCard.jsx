@@ -33,7 +33,7 @@ const CharacterCard = ({character, onViewDetail}) =>{
                         src={character.image}
                         style={{
                             width:'100',
-                          
+                            height: '400px',
                             objectFit : 'cover',
                             display: 'block'
                         }} 
