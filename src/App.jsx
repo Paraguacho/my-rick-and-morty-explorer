@@ -1,7 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import { Row, Col, Card, Tag, Input, Typography, Spin, Pagination, Modal} from "antd";
-
 import CharacterCard from "./CharacterCard";
+import CharacterModal from "./CharacterModal";
 
 
 const {Meta} = Card;
@@ -156,58 +156,13 @@ function App() {
                     showSizeChanger={false}
                 />
             </div>
-            <Modal 
-                title = {<b>Detalle del Personaje</b>}
-                open= {isModalOpen}
-                onCancel={()=>{setIsModalOpen(false)}}
-                footer= {null}
-                destroyOnHidden
-                centered
-                width={600}
-            >
-                {modalLoading ? (
-                    <div style={{
-                            textAlign:'center',
-                            padding:'50px',
-                            }}        
-                    >
-                    <Spin size='Large'/> 
-                    </div>) : selectedCharacter && (
-                        <div style={{
-                            display: 'flex',
-                            gap: '20px',
-                            flexWrap: 'wrap',
-                            justifyContent: 'center'
-                            }}>
-                            <img 
-                                src={selectedCharacter.image}
-                                alt={selectedCharacter.name}
-                                style={{
-                                    width:'250px',
-                                    borderRadius:'10px',
-                                    objectFit: 'cover'
-                                }}
-                            />
-                            <div style={{flex:1,minWidth:'250px'}}>
-                                <Title level={1}><b>{selectedCharacter.name}</b></Title>
-                                <p><b>Especie: </b>{selectedCharacter.species}</p>
-                                <p><b>Género: </b><i>{selectedCharacter.gender}</i></p>
-                                <p><b>Origen: </b>{selectedCharacter.origin?.name}</p>
-                                <p><b>Estatus:</b>
-                                    <Tag color={statusColors[selectedCharacter.status] || 'default' }>
-                                        {selectedCharacter.status}
-                                    </Tag>
-                                </p>
-                                <p><b>Creado: </b>{new Date(selectedCharacter.created).toLocaleDateString('es-ES',{
-                                    day: '2-digit',
-                                    month: '2-digit',
-                                    year: 'numeric' 
-                                    })}
-                                </p>
-                            </div>
-                        </div>
-                    )}
-            </Modal>
+            <CharacterModal 
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                character={selectedCharacter}
+                loading={modalLoading}
+                statusColors={statusColors}
+            />
         </div> 
     );
 }
