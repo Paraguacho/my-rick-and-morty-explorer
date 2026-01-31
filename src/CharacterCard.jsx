@@ -11,13 +11,10 @@ const CharacterCard = ({character, onViewDetail}) =>{
            month: '2-digit',
            year: 'numeric' 
     }): 'Error fecha'
-    
-    
-
     const statusColors = {
         Alive: 'green',
         Dead: 'red',
-        unknown : 'deafult'
+        unknown : 'default'
     }
 
     return(

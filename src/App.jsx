@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Tag, Input, Typography, Pagination} from "antd";
+import React, { useState, useEffect, use } from "react";
+import { Row, Col, Card, Tag, Input, Typography, Spin, Pagination, Modal} from "antd";
 
 import CharacterCard from "./CharacterCard";
 
@@ -14,10 +14,29 @@ function App() {
     const [total, setTotal] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchName, setSearchName] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCharacter, setSelectedCharacter] = useState(null)
+    const [modalLoading,setModalLoading] = useState(false)
+
+    const statusColors = {
+        Alive: 'green',
+        Dead: 'red',
+        unknown : 'default'
+    }
 
     //Mostrar detalles
-    const handleViewDetail = (id) =>{
-        console.log(`Personaje id: ${id}`)
+    const handleViewDetail = async (id) =>{
+        setIsModalOpen(true)
+        setModalLoading(true)
+        try {
+            const response = await fetch(`https://rickandmortyapi.com/api/character/${id}`);
+            const data = await response.json()
+            setSelectedCharacter(data)
+        } catch (error) {
+            console.log("Error al obtener info del personaje", error)
+        }finally{
+            setModalLoading(false)
+        }
     }
 
     const fetchCharacters = async(page = 1,name = '') => {
@@ -100,14 +119,24 @@ function App() {
             </div> 
             
             <Row gutter={[16,16]}>
-                    {characters.map((character)=>(
+                    {characters.length>0 ? (
+                    characters.map((character)=>(
                         <Col key={character.id} style={{flex: '1 0 18%', maxWidth:'20%'}} xs={24} sm={12} md={8} lg ={6} xl = {6}>
                             <CharacterCard
                                 character = {character}
                                 onViewDetail = {handleViewDetail}
                             />
                         </Col>
-                    ))}
+                    ))
+                    ):(
+                        !loading && (
+                            <Col span={24} style={{textAlign:'center', marginTop:'50px'}}>
+                                <Title level={3} style={{color:'#efefef'}}>
+                                    No se encontraron personajes con el nombre "{searchName}"
+                                </Title>
+                            </Col>
+                        )
+                    )}
             </Row>
             <div style={{
                 display:'flex',
@@ -127,6 +156,58 @@ function App() {
                     showSizeChanger={false}
                 />
             </div>
+            <Modal 
+                title = {<b>Detalle del Personaje</b>}
+                open= {isModalOpen}
+                onCancel={()=>{setIsModalOpen(false)}}
+                footer= {null}
+                destroyOnHidden
+                centered
+                width={600}
+            >
+                {modalLoading ? (
+                    <div style={{
+                            textAlign:'center',
+                            padding:'50px',
+                            }}        
+                    >
+                    <Spin size='Large'/> 
+                    </div>) : selectedCharacter && (
+                        <div style={{
+                            display: 'flex',
+                            gap: '20px',
+                            flexWrap: 'wrap',
+                            justifyContent: 'center'
+                            }}>
+                            <img 
+                                src={selectedCharacter.image}
+                                alt={selectedCharacter.name}
+                                style={{
+                                    width:'250px',
+                                    borderRadius:'10px',
+                                    objectFit: 'cover'
+                                }}
+                            />
+                            <div style={{flex:1,minWidth:'250px'}}>
+                                <Title level={1}><b>{selectedCharacter.name}</b></Title>
+                                <p><b>Especie: </b>{selectedCharacter.species}</p>
+                                <p><b>Género: </b><i>{selectedCharacter.gender}</i></p>
+                                <p><b>Origen: </b>{selectedCharacter.origin?.name}</p>
+                                <p><b>Estatus:</b>
+                                    <Tag color={statusColors[selectedCharacter.status] || 'default' }>
+                                        {selectedCharacter.status}
+                                    </Tag>
+                                </p>
+                                <p><b>Creado: </b>{new Date(selectedCharacter.created).toLocaleDateString('es-ES',{
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric' 
+                                    })}
+                                </p>
+                            </div>
+                        </div>
+                    )}
+            </Modal>
         </div> 
     );
 }
